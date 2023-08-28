@@ -2,20 +2,13 @@ const fs = require('fs/promises')
 
 const productModel = require('../models/product.model')
 
-function getRandomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 class ProductManager {
-  constructor(filename) {
-    this.id = getRandomNumber(1, 10) // el id debe de ser el mismo ya que es un singleton
-  }
 
   getAll() {
     return productModel.find().lean()
   }
 
-  getAllPaged(page = 1, limit = 5) {
+  getAllPaged(page = 1, limit = 10) {
     return productModel.paginate({}, { limit, page, lean: true })
   }
 
@@ -43,4 +36,4 @@ class ProductManager {
   }
 }
 
-module.exports = new ProductManager() // singleton
+module.exports = new ProductManager() 

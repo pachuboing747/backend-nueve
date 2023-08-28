@@ -7,7 +7,6 @@ const { hashPassword, isValidPassword } = require('../utils/password')
 
 const router = Router()
 
-// controllers
 const signup = async (req, res) => {
   const user = req.body
   
@@ -27,7 +26,6 @@ const signup = async (req, res) => {
     })
   }
 
-  // crear al usuario
   try {
     const newUser = await userManager.create({
       ...user,
@@ -58,7 +56,6 @@ const login = async (req, res) => {
 
   try {
 
-    // omitimos el password de user guardandolo en una variable _password
     const _user = await userManager.getByEmail(email)
 
     if (!_user) {
@@ -79,7 +76,6 @@ const login = async (req, res) => {
     req.session.user = {
       name: user.firstname,
       id: user._id,
-      // role: 'Admin'
       ...user
     }
 
@@ -93,13 +89,11 @@ const login = async (req, res) => {
     res.render('login', { error: 'Ha ocurrido un error' })
   }
 
-  // guardo la session con la informacion del usuario
 }
 
 const logout = (req, res) => {
   const { user } = req.cookies
 
-  // borrar la cookie
   res.clearCookie('user')
 
   req.session.destroy((err) => {
@@ -114,9 +108,6 @@ const logout = (req, res) => {
     req.user = null
   })
 
-  // res.render('logout', {
-  //   user
-  // })
 }
 
 const resetpassword = async (req, res) => {
@@ -151,7 +142,6 @@ const resetpassword = async (req, res) => {
   }
 }
 
-// rutas de login
 router.get('/signup', (_, res) => res.render('signup'))
 router.get('/login', (_, res) => res.render('login'))
 router.get('/resetpassword', (_, res) => res.render('resetpassword'))

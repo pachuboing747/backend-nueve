@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
   req.session.homeCount = (req.session.homeCount || 0) + 1
 
   res.render('home', {
-    title: 'Home',
+    title: 'Productos',
     products,
     pageInfo,
     user: req.user ?  {

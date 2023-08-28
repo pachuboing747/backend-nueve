@@ -52,8 +52,6 @@ class UserManager {
       return
     }
 
-    /// operadores
-
     await userModel.deleteOne({ _id: id })
   }
 }

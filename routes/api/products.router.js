@@ -3,7 +3,6 @@ const productManager = require('../../dao/managers/product.manager')
 
 const router = Router()
 
-console.log("product manager id: ", productManager.id)
 router.get('/:id', async (req, res) => {
   const { id } = req.params
 
