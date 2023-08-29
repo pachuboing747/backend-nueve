@@ -13,7 +13,8 @@
 
   const Routes = require('./routes/index.js')
   const socketManager = require('./websocket/index.js')
-  const initPassport = require('./config/passport.js')
+  // const initPassport = require('./config/passport.js')
+  const initPassport = require('./config/passport.init.js')
 
   try {
 
@@ -76,3 +77,4 @@
   }
 })()
 
+ 

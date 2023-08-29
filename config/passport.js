@@ -1,4 +1,3 @@
-
 const passport = require('passport')
 const local = require('passport-local')
 
@@ -6,6 +5,8 @@ const userManager = require('../dao/managers/user.manager')
 const { hashPassword, isValidPassword } = require('../utils/password')
 
 const LocalStrategy = local.Strategy
+
+
 
 const signup = async (req, email, password, done) => {
   const { email: _email, password: _password, password2: _password2, ...user } = req.body
@@ -60,18 +61,9 @@ const login = async (email, password, done) => {
   }
 }
 
-const init = () => {
- 
-  passport.use('local-signup', new LocalStrategy({ usernameField: 'email', passReqToCallback: true }, signup))
-  passport.use('local-login', new LocalStrategy({ usernameField: 'email' }, login))
-  passport.serializeUser((user, done) => {
-    done(null, user._id)
-  })
-  passport.deserializeUser(async (id, done) => {
-    const user = await userManager.getById(id)
 
-    done(null, user)
-  })
+module.exports = {
+  LocalStrategy,
+  signup,
+  login,
 }
-
-module.exports = init

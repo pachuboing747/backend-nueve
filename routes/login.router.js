@@ -2,8 +2,9 @@ const { Router } = require('express')
 const passport = require('passport')
 
 const userManager = require('../dao/managers/user.manager.js')
-const isAuth = require('../middlewares/auth')
-const { hashPassword, isValidPassword } = require('../utils/password')
+const isAuth = require('../middlewares/auth.js')
+const { hashPassword, isValidPassword } = require('../utils/password.js')
+const { StrategyName} = require ("../config/config.password.js")
 
 const router = Router()
 
@@ -146,6 +147,22 @@ router.get('/signup', (_, res) => res.render('signup'))
 router.get('/login', (_, res) => res.render('login'))
 router.get('/resetpassword', (_, res) => res.render('resetpassword'))
 
+
+const callback = (req,res)=>{
+  const user = req.user;
+  req.session.user = {
+    id:user.id,
+    name:user.firstname,
+    role:user?.role??"costumer",
+    email:user.email
+  }
+  res.redirect("/");
+}
+
+router.get("/github",passport.authenticate(StrategyName), (_,res)=>{});
+router.get("/githubSessions", passport.authenticate(StrategyName), callback);
+
+
 router.post('/signup', passport.authenticate('local-signup', {
   successRedirect: '/profile',
   failureRedirect: '/signup'
@@ -167,5 +184,6 @@ router.get('/logout', isAuth, (req, res) => {
     }
   })
 })
+
 
 module.exports = router
